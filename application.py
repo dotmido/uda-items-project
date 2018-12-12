@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, jsonify, url_for, flash
+from flask import Flask, render_template, request
+from flask import redirect, jsonify, url_for, flash
 from sqlalchemy improt create_engine
 from sqlalchemy.orm improt sessionmaker
 from database import Base, User, Category, Item
@@ -23,9 +24,11 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+
 @app.route('/login')
 def login():
     return 'here go login screen'
+
 
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
