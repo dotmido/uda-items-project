@@ -1,9 +1,9 @@
-from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy import Column, ForeignKey, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
-import datetime
+from datetime import datetime
 
 Base = declarative_base()
 
@@ -33,7 +33,7 @@ class Category(Base):
     name = Column(String(50), nullable=False)
     date_modified = Column(DateTime(timezone=True), server_default=func.now())
     date_added = Column(DateTime(timezone=True), onupdate=func.now())
-    user_id = Column(Integer, ForeignKey('User.id'))
+    user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
 
     @property
@@ -52,7 +52,7 @@ class Item(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(50), nullable=False)
     description = Column(String(300), nullable=False)
-    date_modified = Column(DateTime(timezone=True), server_default=func.now()),
+    date_modified = Column(DateTime(timezone=True), server_default=func.now())
     date_added = Column(DateTime(timezone=True), onupdate=func.now())
     category_id = Column(Integer, ForeignKey('category.id'))
     user_id = Column(Integer, ForeignKey('user.id'))

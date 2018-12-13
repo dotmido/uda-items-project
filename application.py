@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 from flask import redirect, jsonify, url_for, flash
-from sqlalchemy improt create_engine
-from sqlalchemy.orm improt sessionmaker
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 from database import Base, User, Category, Item
 from flask import session as login_session
 import random
@@ -23,6 +23,46 @@ engine = create_engine('sqlite:///catalog.db')
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
+
+
+@app.route('/')
+def home():
+    return 'here goes homepage'
+
+
+@app.route('/category/list/')
+def allCategories():
+    return 'List all categories'
+
+
+@app.route('/category/new/')
+def newCategory():
+    return 'New category view'
+
+
+@app.route('/category/edit/<int:category_id>/')
+def editCategoryByID():
+    return 'Edit category by ID view'
+
+
+@app.route('/category/delete/<int:category_id>/')
+def deleteCategoryByID():
+    return 'Delete category by ID view'
+
+
+@app.route('/item/new/<int:category_id>/')
+def newItem():
+    return 'Create new item under category'
+
+
+@app.route('/item/edit/<int:item_id>/')
+def editItemByID():
+    return 'Edit item by ID'
+
+
+@app.route('/item/delete/<int:item_id>/')
+def deleteItemByID():
+    return 'Delete item by ID'
 
 
 @app.route('/login')
