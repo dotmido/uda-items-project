@@ -35,7 +35,20 @@ def inject_now():
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    categories = session.query(Category).order_by(
+        Category.date_added.desc())
+    items = session.query(Item).order_by(Item.date_added.desc()).limit(9)
+    return render_template('index.html', categories=categories, items=items)
+
+
+def latestCategories():
+
+    return render_template('sidemenu.html', categories=categories)
+
+
+@app.route('/category/<int:category_id>/items/')
+def listItems(category_id):
+    return 'List items inside category'
 
 
 @app.route('/category/list/')
