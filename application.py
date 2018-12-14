@@ -53,7 +53,8 @@ def listItems(category_id):
 
 @app.route('/category/list/')
 def allCategories():
-    return 'List all categories'
+    categories = session.query(Category).all()
+    return render_template('categories.html', categories=categories)
 
 
 @app.route('/category/new/')

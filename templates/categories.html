@@ -29,7 +29,7 @@
     <div class="row">
       <!-- /.col-lg-3 -->
 
-      <div class="col-lg-9">
+      <div class="col-lg-12">
         <br>
         <div class="row">
           {%for category in categories %}
@@ -39,9 +39,8 @@
               <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
               <div class="card-body">
                 <h4 class="card-title">
-                  <a href="#">{{category.name}}</a>
+                  <a href="">{{category.name}}</a>
                 </h4>
-                <h5>$ {{category.date_added}}</h5>
               </div>
               <div class="card-footer">
                 <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
@@ -65,8 +64,8 @@
   {% include "footer.html" %}
 
   <!-- Bootstrap core JavaScript -->
-  <script src="static/vendor/jquery/jquery.min.js"></script>
-  <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/vendor/jquery/jquery.min.js"></script>
+  <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
