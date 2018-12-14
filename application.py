@@ -71,7 +71,8 @@ def editCategoryByID(category_id):
 
 @app.route('/category/delete/<int:category_id>/')
 def deleteCategoryByID(category_id):
-    return 'Delete category by ID view'
+    category = session.query(Category).filter_by(id=category_id).one()
+    return render_template('Category/delete.html', category=category)
 
 
 @app.route('/item/new/<int:category_id>/')
