@@ -41,27 +41,27 @@ def newCategory():
 
 
 @app.route('/category/edit/<int:category_id>/')
-def editCategoryByID():
+def editCategoryByID(category_id):
     return 'Edit category by ID view'
 
 
 @app.route('/category/delete/<int:category_id>/')
-def deleteCategoryByID():
+def deleteCategoryByID(category_id):
     return 'Delete category by ID view'
 
 
 @app.route('/item/new/<int:category_id>/')
-def newItem():
+def newItem(category_id):
     return 'Create new item under category'
 
 
 @app.route('/item/edit/<int:item_id>/')
-def editItemByID():
+def editItemByID(item_id):
     return 'Edit item by ID'
 
 
 @app.route('/item/delete/<int:item_id>/')
-def deleteItemByID():
+def deleteItemByID(item_id):
     return 'Delete item by ID'
 
 
