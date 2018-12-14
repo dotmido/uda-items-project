@@ -11,9 +11,12 @@ from oauth2client.client import FlowExchangeError
 import httplib2
 import json
 from flask import make_response
+from flask_bootstrap import Bootstrap
 import requests
+from datetime import datetime
 
 app = Flask(__name__)
+Bootstrap(app)
 
 CLIENT_ID = json.loads(
     open('client_secrets.json', 'r').read())['web']['client_id']
@@ -25,9 +28,14 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
+@app.context_processor
+def inject_now():
+    return {'now': datetime.utcnow()}
+
+
 @app.route('/')
 def home():
-    return 'here goes homepage'
+    return render_template('index.html')
 
 
 @app.route('/category/list/')
