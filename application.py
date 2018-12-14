@@ -59,7 +59,7 @@ def allCategories():
 
 @app.route('/category/new/')
 def newCategory():
-    return 'New category view'
+    return render_template('Category/new.html')
 
 
 @app.route('/category/edit/<int:category_id>/')
