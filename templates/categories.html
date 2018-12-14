@@ -44,13 +44,12 @@
                 </h4>
               </div>
               <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-              </div>
+                <small class="text-muted">
+                  <a href="{{url_for('editCategoryByID',category_id=category.id)}}" class="btn btn-success">Edit</a>
+                  <a href="{{url_for('deleteCategoryByID',category_id=category.id)}}" class="btn btn-danger">Delete</a>
+                </small> </div>
             </div>
-          </div>
-          {% endfor %}
-        </div>
-        <!-- /.row -->
+          </div> {% endfor %} </div> <!-- /.row -->
 
       </div>
       <!-- /.col-lg-9 -->
