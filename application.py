@@ -47,8 +47,9 @@ def latestCategories():
 
 @app.route('/category/<int:category_id>/items/')
 def listItems(category_id):
+    category = session.query(Category).filter_by(id=category_id).one()
     items = session.query(Item).filter_by(category_id=category_id).all()
-    return render_template('items.html', items=items)
+    return render_template('items.html', items=items, category=category)
 
 
 @app.route('/category/list/')
