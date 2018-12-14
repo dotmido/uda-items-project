@@ -22,7 +22,7 @@ CLIENT_ID = json.loads(
     open('client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = "Item catalog"
 
-engine = create_engine('sqlite:///catalog.db')
+engine = create_engine('sqlite:///catalog.db?check_same_thread=False')
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
@@ -42,13 +42,13 @@ def home():
 
 
 def latestCategories():
-
     return render_template('sidemenu.html', categories=categories)
 
 
 @app.route('/category/<int:category_id>/items/')
 def listItems(category_id):
-    return 'List items inside category'
+    items = session.query(Item).filter_by(category_id=category_id).all()
+    return render_template('items.html', items=items)
 
 
 @app.route('/category/list/')
