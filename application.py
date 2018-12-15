@@ -201,6 +201,12 @@ def itemsListJson(category_id):
     return jsonify(items=[i.serialize for i in items])
 
 
+# @app.route('/users/json')
+# def users():
+#    users = session.query(User).all()
+#    return jsonify(users=[u.serialize for u in users])
+
+
 @app.route('/login')
 def login():
     state = ''.join(
