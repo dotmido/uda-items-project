@@ -33,6 +33,7 @@ Once you get environment setup done follow this instruction to get it up and run
 
 before starting browsing the catalog application you will need to install database and dumb some data inside it, this can be done using, first running database setup file `database.py` then running `dumbdata.py` file
 
+      $ python database.py
       $ python dumbdata.py
       $ python application.py
 
@@ -46,13 +47,12 @@ Database contains three main tables:
 
 ##### User
 
-| Column    | Type   |
-| --------- | ------ |
-| id        | int    |
-| full_name | string |
-| username  | string |
-| email     | string |
-| imageurl  | string |
+| Column  | Type   |
+| ------- | ------ |
+| id      | int    |
+| name    | string |
+| email   | string |
+| picture | string |
 
 ##### Category
 
@@ -61,7 +61,6 @@ Database contains three main tables:
 | id            | int      |
 | name          | string   |
 | date_modified | datetime |
-| date_added    | datetime |
 | user_id       | int      |
 
 #### Item
@@ -72,6 +71,5 @@ Database contains three main tables:
 | name          | string   |
 | description   | string   |
 | date_modified | datetime |
-| date_added    | datetime |
 | category_id   | int      |
 | user_id       | int      |
