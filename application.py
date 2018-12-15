@@ -128,13 +128,13 @@ def newItem(category_id):
     return render_template('Item/new.html', category=category)
 
 
-@app.route('/item/edit/<int:item_id>/',methods=['POST','GET'])
+@app.route('/item/edit/<int:item_id>/', methods=['POST', 'GET'])
 def editItemByID(item_id):
     item = session.query(Item).filter_by(id=item_id).one()
     category = session.query(Category).filter_by(id=item.category_id).one()
     if 'username' not in login_session:
         return redirect('/login')
-    if category.user_id != login_session['user_id']:
+    if item.user_id != login_session['user_id']:
         return """<script>
         function myFunction() {
         alert('You are not authorized to edit this item!.
@@ -152,11 +152,24 @@ def editItemByID(item_id):
         return render_template('/Item/edit.html', item=item, category=category)
 
 
-@app.route('/item/delete/<int:item_id>/')
+@app.route('/item/delete/<int:item_id>/', methods=['POST', 'GET'])
 def deleteItemByID(item_id):
     item = session.query(Item).filter_by(id=item_id).one()
     category = session.query(Category).filter_by(id=item.category_id).one()
-    return render_template('/Item/delete.html', item=item, category=category)
+    if 'username' not in login_session:
+        return redirect('/login')
+    if item.user_id != login_session['user_id']:
+        return """<script>
+        function myFunction() {
+        alert('You are not authorized to edit this item!.');
+        }</script><body onload='myFunction()'>"""
+    if request.method == 'POST':
+        session.delete(item)
+        flash('%s deleted successfully' % item.name)
+        session.commit()
+        return redirect(url_for('listItems', category_id=category.id))
+    else:
+        return render_template('/Item/delete.html', item=item, category=category)
 
 
 @app.route('/login')
