@@ -77,17 +77,22 @@ def deleteCategoryByID(category_id):
 
 @app.route('/item/new/<int:category_id>/')
 def newItem(category_id):
-    return 'Create new item under category'
+    category = session.query(Category).filter_by(id=category_id).one()
+    return render_template('Item/new.html', category=category)
 
 
 @app.route('/item/edit/<int:item_id>/')
 def editItemByID(item_id):
-    return 'Edit item by ID'
+    item = session.query(Item).filter_by(id=item_id).one()
+    category = session.query(Category).filter_by(id=item.category_id).one()
+    return render_template('/Item/edit.html', item=item, category=category)
 
 
 @app.route('/item/delete/<int:item_id>/')
 def deleteItemByID(item_id):
-    return 'Delete item by ID'
+    item = session.query(Item).filter_by(id=item_id).one()
+    category = session.query(Category).filter_by(id=item.category_id).one()
+    return render_template('/Item/delete.html', item=item, category=category)
 
 
 @app.route('/login')

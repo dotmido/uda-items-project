@@ -30,7 +30,10 @@
     <div class="row">
 
       <h3><a href="{{url_for('allCategories')}}">Categories</a> / {{category.name}}</h3>
+
       <div class="col-lg-12">
+        <a href="{{url_for('newItem', category_id= category.id)}}" class="btn btn-primary">New Item</a>
+        <br>
         <br>
         <div class="row">
           {%for item in items %}
@@ -46,24 +49,21 @@
                 <p class="card-text">{{item.description}}</p>
               </div>
               <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                <small class="text-muted">
+                  <a href="{{url_for('editItemByID', item_id=item.id)}}" class="btn btn-success">Edit</a> 
+                  <a href="{{url_for('deleteItemByID', item_id=item.id)}}" class="btn btn-danger">Delete</a>
+                </small> </div> </div> </div> {% endfor %} </div> <!-- /.row -->
               </div>
+              <!-- /.col-lg-9 -->
             </div>
+            <!-- /.row -->
           </div>
-          {% endfor %}
-        </div>
-        <!-- /.row -->
-      </div>
-      <!-- /.col-lg-9 -->
-    </div>
-    <!-- /.row -->
-  </div>
-  <!-- /.container -->
-  <!-- Footer -->
-  {% include "footer.html" %}
-  <!-- Bootstrap core JavaScript -->
-  <script src="static/vendor/jquery/jquery.min.js"></script>
-  <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+          <!-- /.container -->
+          <!-- Footer -->
+          {% include "footer.html" %}
+          <!-- Bootstrap core JavaScript -->
+          <script src="static/vendor/jquery/jquery.min.js"></script>
+          <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
