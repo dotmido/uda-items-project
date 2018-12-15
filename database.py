@@ -33,7 +33,6 @@ class Category(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(50), nullable=False)
     date_modified = Column(DateTime(timezone=True), server_default=func.now())
-    date_added = Column(DateTime(timezone=True), onupdate=func.now())
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
 
@@ -43,7 +42,6 @@ class Category(Base):
             'id': self.id,
             'name': self.name,
             'date_modified': self.date_modified,
-            'date_added': self.date_added,
             'user_id': self.user_id
         }
 
@@ -55,7 +53,6 @@ class Item(Base):
     description = Column(String(300), nullable=False)
     price = Column(Float, nullable=False)
     date_modified = Column(DateTime(timezone=True), server_default=func.now())
-    date_added = Column(DateTime(timezone=True), onupdate=func.now())
     category_id = Column(Integer, ForeignKey('category.id'))
     user_id = Column(Integer, ForeignKey('user.id'))
     category = relationship(Category)
@@ -68,7 +65,6 @@ class Item(Base):
             'name': self.name,
             'description': self.description,
             'date_modified': self.date_modified,
-            'date_added': self.date_added,
             'category_id': self.category_id,
             'user_id': self.user_id
         }

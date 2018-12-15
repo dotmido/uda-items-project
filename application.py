@@ -38,8 +38,8 @@ def inject_now():
 @app.route('/')
 def home():
     categories = session.query(Category).order_by(
-        Category.date_added.desc())
-    items = session.query(Item).order_by(Item.date_added.desc()).limit(9)
+        Category.date_modified.desc())
+    items = session.query(Item).order_by(Item.date_modified.desc()).limit(9)
     return render_template('index.html', categories=categories, items=items)
 
 
