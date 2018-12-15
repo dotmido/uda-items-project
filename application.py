@@ -60,11 +60,19 @@ def allCategories():
     return render_template('categories.html', categories=categories)
 
 
-@app.route('/category/new/')
+@app.route('/category/new/', methods=['GET', 'POST'])
 def newCategory():
     if 'username' not in login_session:
         return redirect('/login')
-    return render_template('Category/new.html')
+    if request.method == 'POST':
+        newCategory = Category(
+            name=request.form['name'], user_id=login_session['user_id'])
+        session.add(newCategory)
+        flash('New Category %s added successfully' % newCategory.name)
+        session.commit()
+        return redirect(url_for('allCategories'))
+    else:
+        return render_template('Category/new.html')
 
 
 @app.route('/category/edit/<int:category_id>/')
