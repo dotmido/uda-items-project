@@ -31,20 +31,22 @@
     <div class="row">
       <div class="col-lg-10">
         <div class="row">
-          <div class="form-group" width='100%'>
-            <input type='text' class='form-control' placeholder="Category name" />
-            <br>
-            <input type='submit' class="btn btn-primary" value='Update' />
-            <a href='{{url_for('allCategories')}}' class="btn btn-success">Discard</a>
+          <form action="{{ url_for('editCategoryByID',category_id = category.id)}}" method="POST">
+            <div class="form-group" width='100%'>
+              <input type='text' name="name" class='form-control' placeholder="Category name" />
+              <br>
+              <input type='submit' class="btn btn-primary" value='Update' />
+              <a href='{{url_for('allCategories')}}' class="btn btn-success">Discard</a>
+          </form>
 
-          </div>
-        </div> <!-- /.row -->
-        <br>
-      </div>
-      <!-- /.col-lg-9 -->
-
+        </div>
+      </div> <!-- /.row -->
+      <br>
     </div>
-    <!-- /.row -->
+    <!-- /.col-lg-9 -->
+
+  </div>
+  <!-- /.row -->
 
   </div>
   <!-- /.container -->

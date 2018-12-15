@@ -75,9 +75,22 @@ def newCategory():
         return render_template('Category/new.html')
 
 
-@app.route('/category/edit/<int:category_id>/')
+@app.route('/category/edit/<int:category_id>/',methods=['POST', 'GET'])
 def editCategoryByID(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
+    if 'username' not in login_session:
+        return redirect('/login')
+    if category.user_id != login_session['user_id']:
+        return """<script>
+        function myFunction() {
+        alert('You are not authorized to edit this category!.
+        Please create your own restaurant in order to edit.');
+        }</script><body onload='myFunction()'>"""
+    if request.method == 'POST':
+        if request.form['name']:
+            category.name = request.form['name']
+            flash('Category %s updated successfully!' % category.name)
+            return redirect(url_for('allCategories'))
     return render_template('Category/edit.html', category=category)
 
 
