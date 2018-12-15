@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database import Base, User, Category, Item
@@ -7,13 +9,6 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
-
-# Add default user
-basic_user = User(name='Mohammed Mustafa',
-                  email='mjavax@gmail.com', picture='https://pbs.twimg.com/profile_images/2671170543/18debd694829ed78203a5a36dd364160_400x400.png')
-
-session.add(basic_user)
-session.commit()
 
 # Add 4 Categories
 category1 = Category(name='Watches', user_id=1)
@@ -58,20 +53,23 @@ session.add(item3)
 session.commit()
 
 item4 = Item(name='Apple MacBook',
-             description='13-inch Retina display 1.6GHz dual-core Intel Core i5',
+             description="""13-inch Retina display
+             1.6GHz dual-core Intel Core i5""",
              price=6750,
              category_id=2, user_id=1)
 session.add(item4)
 session.commit()
 
-item5 = Item(name='iPhone 5S', description="""Apple iPhone 5S 16GB GSM Unlocked,
+item5 = Item(name='iPhone 5S',
+             description="""Apple iPhone 5S 16GB GSM Unlocked,
              Space Gray""",
              price=450,
              category_id=3, user_id=1)
 session.add(item5)
 session.commit()
 
-item6 = Item(name='iPhone 6S', description='Apple iPhone 6S (32GB) - Space Gray',
+item6 = Item(name='iPhone 6S',
+             description='Apple iPhone 6S (32GB) - Space Gray',
              price=550,
              category_id=3, user_id=1)
 session.add(item6)

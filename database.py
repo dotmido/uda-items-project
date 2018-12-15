@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.sql import func
