@@ -114,9 +114,18 @@ def deleteCategoryByID(category_id):
         return render_template('Category/delete.html', category=category)
 
 
-@app.route('/item/new/<int:category_id>/')
+@app.route('/item/new/<int:category_id>/',methods=['POST','GET'])
 def newItem(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
+    if 'username' not in login_session:
+        return redirect('/login')
+    if request.method == 'POST':
+        item = Item(name=request.form['name'], description=request.form['description'],
+                    price=request.form['price'], category_id=category.id, user_id=login_session['user_id'])
+        session.add(item)
+        flash('%s Added successfully!' % item.name)
+        session.commit()
+        return redirect(url_for('listItems', category_id=category.id))
     return render_template('Item/new.html', category=category)
 
 
