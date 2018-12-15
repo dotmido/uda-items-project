@@ -48,22 +48,27 @@
                 <h5>$ {{item.price}}</h5>
                 <p class="card-text">{{item.description}}</p>
               </div>
+              {% if item.user_id == user.id %}
               <div class="card-footer">
                 <small class="text-muted">
-                  <a href="{{url_for('editItemByID', item_id=item.id)}}" class="btn btn-success">Edit</a> 
+                  <a href="{{url_for('editItemByID', item_id=item.id)}}" class="btn btn-success">Edit</a>
                   <a href="{{url_for('deleteItemByID', item_id=item.id)}}" class="btn btn-danger">Delete</a>
-                </small> </div> </div> </div> {% endfor %} </div> <!-- /.row -->
-              </div>
-              <!-- /.col-lg-9 -->
+                </small> </div>
+              {%endif%}
+
             </div>
-            <!-- /.row -->
-          </div>
-          <!-- /.container -->
-          <!-- Footer -->
-          {% include "footer.html" %}
-          <!-- Bootstrap core JavaScript -->
-          <script src="static/vendor/jquery/jquery.min.js"></script>
-          <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+          </div> {% endfor %} </div> <!-- /.row -->
+      </div>
+      <!-- /.col-lg-9 -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container -->
+  <!-- Footer -->
+  {% include "footer.html" %}
+  <!-- Bootstrap core JavaScript -->
+  <script src="{{url_for('static', filename='vendor/jquery/jquery.min.js')}}"></script>
+  <script src="{{url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
 </body>
 

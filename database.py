@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, DateTime,Float
+from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
@@ -10,21 +10,11 @@ Base = declarative_base()
 
 class User(Base):
     __tablename__ = 'user'
-    id = Column(Integer, primary_key=True)
-    full_name = Column(String(200), nullable=False)
-    username = Column(String(100), nullable=False)
-    email = Column(String(200), nullable=False)
-    imageurl = Column(String(300), nullable=True)
 
-    @property
-    def serialize(self):
-        return{
-            'id': self.id,
-            'fullname': self.full_name,
-            'username': self.username,
-            'email': self.email,
-            'imageurl': self.imageurl
-        }
+    id = Column(Integer, primary_key=True)
+    name = Column(String(250), nullable=False)
+    email = Column(String(250), nullable=False)
+    picture = Column(String(250))
 
 
 class Category(Base):
