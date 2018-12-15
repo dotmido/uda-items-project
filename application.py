@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from flask import Flask, render_template, request
 from flask import redirect, jsonify, url_for, flash
 from sqlalchemy import create_engine
@@ -49,15 +51,26 @@ def latestCategories():
 def listItems(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
     items = session.query(Item).filter_by(category_id=category_id).all()
-    user_id = getUserID(login_session['email'])
-    user = session.query(User).filter_by(id=user_id).one()
-    return render_template('items.html', items=items, category=category, user=user)
+    if 'username' in login_session:
+        user_id = getUserID(login_session['email'])
+        user = session.query(User).filter_by(id=user_id).one()
+        return render_template('items.html', items=items,
+                               category=category, user=user)
+    else:
+        return render_template('items.html', items=items,
+                               category=category)
 
 
 @app.route('/category/list/')
 def allCategories():
     categories = session.query(Category).all()
-    return render_template('categories.html', categories=categories)
+    if 'username' in login_session:
+        user_id = getUserID(login_session['email'])
+        user = session.query(User).filter_by(id=user_id).one()
+        return render_template('categories.html',
+                               categories=categories, user=user)
+    else:
+        return render_template('categories.html', categories=categories)
 
 
 @app.route('/category/new/', methods=['GET', 'POST'])
@@ -119,8 +132,10 @@ def newItem(category_id):
     if 'username' not in login_session:
         return redirect('/login')
     if request.method == 'POST':
-        item = Item(name=request.form['name'], description=request.form['description'],
-                    price=request.form['price'], category_id=category.id, user_id=login_session['user_id'])
+        item = Item(name=request.form['name'],
+                    description=request.form['description'],
+                    price=request.form['price'],
+                    category_id=category.id, user_id=login_session['user_id'])
         session.add(item)
         flash('%s Added successfully!' % item.name)
         session.commit()
@@ -169,13 +184,28 @@ def deleteItemByID(item_id):
         session.commit()
         return redirect(url_for('listItems', category_id=category.id))
     else:
-        return render_template('/Item/delete.html', item=item, category=category)
+        return render_template('/Item/delete.html',
+                               item=item, category=category)
+
+
+@app.route('/category/JSON/')
+@app.route('/category/json/')
+def categoriesJson():
+    categories = session.query(Category).all()
+    return jsonify(categories=[r.serialize for r in categories])
+
+
+@app.route('/category/<int:category_id>/items/json/')
+def itemsListJson(category_id):
+    items = session.query(Item).filter_by(category_id=category_id).all()
+    return jsonify(items=[i.serialize for i in items])
 
 
 @app.route('/login')
 def login():
     state = ''.join(
-        random.choice(string.ascii_uppercase + string.digits) for x in range(32))
+        random.choice(string.ascii_uppercase +
+                      string.digits) for x in range(32))
     login_session['state'] = state
     # return "The current session state is %s" % login_session['state']
     return render_template('login.html', STATE=state)
@@ -237,8 +267,8 @@ def gconnect():
     stored_access_token = login_session.get('access_token')
     stored_gplus_id = login_session.get('gplus_id')
     if stored_access_token is not None and gplus_id == stored_gplus_id:
-        response = make_response(json.dumps('Current user is already connected.'),
-                                 200)
+        response = make_response(
+            json.dumps('Current user is already connected.'), 200)
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -269,7 +299,9 @@ def gconnect():
     output += '!</h1>'
     output += '<img src="'
     output += login_session['picture']
-    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+    output += """ style = "width: 300px; height: 300px;
+    border-radius: 150px;-webkit-border-radius: 150px;
+    -moz-border-radius: 150px;"> """
     flash("you are now logged in as %s" % login_session['username'])
     return output
 
@@ -294,7 +326,7 @@ def getUserID(email):
     try:
         user = session.query(User).filter_by(email=email).one()
         return user.id
-    except:
+    except Exception:
         return None
 
 # DISCONNECT - Revoke a current user's token and reset their login_session

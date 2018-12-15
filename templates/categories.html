@@ -55,11 +55,13 @@
                   <a href="{{url_for('listItems', category_id = category.id)}}">{{category.name}}</a>
                 </h4>
               </div>
+              {% if (user is defined) and (category.user_id == user.id) %}
               <div class="card-footer">
                 <small class="text-muted">
                   <a href="{{url_for('editCategoryByID',category_id=category.id)}}" class="btn btn-success">Edit</a>
                   <a href="{{url_for('deleteCategoryByID',category_id=category.id)}}" class="btn btn-danger">Delete</a>
                 </small> </div>
+              {% endif %}
             </div>
           </div> {% endfor %} </div> <!-- /.row -->
 
