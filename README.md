@@ -31,7 +31,7 @@ Once you get environment setup done follow this instruction to get it up and run
 
 ### Get started
 
-before starting browsing the catalog application you will need to install database and dumb some data inside it, this can be done using, first running database setup file `database.py` then running `dumbdata.py` file
+before starting browsing the catalog application you will need to install database and dumb some data inside it, this can be done running database setup file `database.py` then running `dumbdata.py` file
 
       $ python database.py
       $ python dumbdata.py
@@ -73,3 +73,11 @@ Database contains three main tables:
 | date_modified | datetime |
 | category_id   | int      |
 | user_id       | int      |
+
+### Project Endpoints
+
+this project contains endpoints to get JSON based data
+
+> /category/category_id/items/json
+
+> /category/json
