@@ -81,3 +81,6 @@ this project contains endpoints to get JSON based data
 > /category/category_id/items/json
 
 > /category/json
+
+### Styling
+this projected styled using bootstrap ready theme
