@@ -84,7 +84,7 @@ def editCategoryByID(category_id):
         return """<script>
         function myFunction() {
         alert('You are not authorized to edit this category!.
-        Please create your own restaurant in order to edit.');
+        Please create your own category in order to edit.');
         }</script><body onload='myFunction()'>"""
     if request.method == 'POST':
         if request.form['name']:
@@ -102,8 +102,7 @@ def deleteCategoryByID(category_id):
     if category.user_id != login_session['user_id']:
         return """<script>
         function myFunction() {
-        alert('You are not authorized to edit this category!.
-        Please create your own restaurant in order to edit.');
+        alert('You are not authorized to delete this category!);
         }</script><body onload='myFunction()'>"""
     if request.method == 'POST':
         session.delete(category)
@@ -114,7 +113,7 @@ def deleteCategoryByID(category_id):
         return render_template('Category/delete.html', category=category)
 
 
-@app.route('/item/new/<int:category_id>/',methods=['POST','GET'])
+@app.route('/item/new/<int:category_id>/', methods=['POST', 'GET'])
 def newItem(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
     if 'username' not in login_session:
@@ -129,11 +128,28 @@ def newItem(category_id):
     return render_template('Item/new.html', category=category)
 
 
-@app.route('/item/edit/<int:item_id>/')
+@app.route('/item/edit/<int:item_id>/',methods=['POST','GET'])
 def editItemByID(item_id):
     item = session.query(Item).filter_by(id=item_id).one()
     category = session.query(Category).filter_by(id=item.category_id).one()
-    return render_template('/Item/edit.html', item=item, category=category)
+    if 'username' not in login_session:
+        return redirect('/login')
+    if category.user_id != login_session['user_id']:
+        return """<script>
+        function myFunction() {
+        alert('You are not authorized to edit this item!.
+        Please create your own item in order to edit.');
+        }</script><body onload='myFunction()'>"""
+    if request.method == 'POST':
+        item.name = request.form['name']
+        item.description = request.form['description']
+        item.price = request.form['price']
+        session.add(item)
+        session.commit()
+        flash('Item updated successfully')
+        return redirect(url_for('listItems', category_id=category.id))
+    else:
+        return render_template('/Item/edit.html', item=item, category=category)
 
 
 @app.route('/item/delete/<int:item_id>/')
